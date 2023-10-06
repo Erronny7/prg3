@@ -62,6 +62,7 @@ let grassEaterArr = []
 let predatorArr = []
 let flowerArr = []
 let GrassAndFlowerEaterArr = []
+let creatureArr = []
 
 function setup() {
     frameRate(5);
