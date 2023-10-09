@@ -20,7 +20,7 @@ class GrassEater extends Creature {
     }
     chooseCell(character) {
         this.getNewCoordinates();
-        return super.getNewCoordinates(character);
+        return super.chooseCell(character);
         // var found = [];
         // for (var i in this.directions) {
         //     var x = this.directions[i][0];

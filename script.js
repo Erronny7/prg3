@@ -76,21 +76,21 @@ function setup() {
                 let gr = new Grass(x, y)
                 grassArr.push(gr)
             } else if (matrix[y][x] == 2) {
-                let gr = new GrassEater(x, y)
-                grassEaterArr.push(gr)
+                let grEat = new GrassEater(x, y)
+                grassEaterArr.push(grEat)
             }
             else if (matrix[y][x] == 3) {
-                let gr = new predator(x, y)
-                predatorArr.push(gr)
+                let pr = new predator(x, y)
+                predatorArr.push(pr)
             }
             else if (matrix[y][x] == 4) {
-                let gr = new Flower(x, y)
-                flowerArr.push(gr)
+                let fl = new Flower(x, y)
+                flowerArr.push(fl)
             }
 
             else if (matrix[y][x] == 5) {
-                let gr = new GrassAndFlowerEater(x, y)
-                GrassAndFlowerEaterArr.push(gr)
+                let grafle = new GrassAndFlowerEater(x, y)
+                GrassAndFlowerEaterArr.push(grafle)
             }
         }
     }
@@ -144,7 +144,7 @@ function draw() {
     }
 
     for (let i in flowerArr) {
-        flowerArr[i].mul()
+        flowerArr[i].mull()
     }
 
     for (let i in GrassAndFlowerEaterArr) {
