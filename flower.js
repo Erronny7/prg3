@@ -1,4 +1,6 @@
-class Flower extends Creature {
+let Creature = require('./creature')
+
+module.exports = class Flower extends Creature {
     constructor(x, y) {
         super(x, y);
         this.multiply = 0

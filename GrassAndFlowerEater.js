@@ -1,4 +1,6 @@
-class GrassAndFlowerEater extends Creature{
+let Creature = require('./creature')
+
+module.exports = class GrassAndFlowerEater extends Creature{
     constructor(x, y) {
         super(x, y);
         // this.x = x;
