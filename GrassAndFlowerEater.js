@@ -1,12 +1,9 @@
 let Creature = require('./creature')
 
-module.exports = class GrassAndFlowerEater extends Creature{
+module.exports = class GrassAndFlowerEater extends Creature {
     constructor(x, y) {
         super(x, y);
-        // this.x = x;
-        // this.y = y;
         this.energy = 8
-        // this.directions = [];
     }
     getNewCoordinates() {
         this.directions = [
@@ -24,23 +21,9 @@ module.exports = class GrassAndFlowerEater extends Creature{
         this.getNewCoordinates();
         return super.chooseCell(character);
     }
-        // var found = [];
-        // for (var i in this.directions) {
-        //     var x = this.directions[i][0];
-        //     var y = this.directions[i][1];
-        //     if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-        //         if (matrix[y][x] == character) {
-        //             found.push(this.directions[i]);
-        //         }
-        //     }
-        // }
-
-        // return found;
-    
 
     mul() {
-        var emptyCells = this.chooseCell(0);
-        var newCell = random(emptyCells);
+        var newCell = this.selectRandomCell(0);
 
         if (newCell) {
             var newX = newCell[0];
@@ -55,8 +38,7 @@ module.exports = class GrassAndFlowerEater extends Creature{
 
     move() {
         this.energy--
-        var emptyCells = this.chooseCell(0);
-        var newCell = random(emptyCells);
+        var newCell = this.selectRandomCell(0);
         if (newCell && this.energy >= 0) {
             var newX = newCell[0];
             var newY = newCell[1];
@@ -70,8 +52,7 @@ module.exports = class GrassAndFlowerEater extends Creature{
     }
 
     eat() {
-        var emptyCells = this.chooseCell(4);
-        var newCell = random(emptyCells);
+        var newCell = this.selectRandomCell(0);
         if (newCell) {
             this.energy++
             var newX = newCell[0];
