@@ -127,9 +127,24 @@ function playGame() {
 io.on("connection", function (socket) {
     socket.emit('draw matrix', matrix)
     initGame()
+    socket.on('pause game',handlePauseGame)
+    socket.on('restart game',hendleRestartGame)
 })
 
-server.listen(3000, () => {
-    console.log('Server is working on port 3000');
+function  handlePauseGame(ifPaused){
+    if(ifPaused){
+    clearInterval(intId)
+    }else{
+    startInterval();
+    }
+} 
+
+function hendleRestartGame(){
+    clearInterval(intId);
+    initGame();
+}
+
+server.listen(7777, () => {
+    console.log('Server is working on port 7777');
 
 })

@@ -1,6 +1,28 @@
 let side = 50;
 let cellNum = 15;
-const socket = io()
+const socket = io();
+
+const pauseBtn = document.querySelector('#pause');
+const resumeBtn = document.querySelector('#resume');
+const restartBtn = document.querySelector('#restart');
+
+pauseBtn.addEventListener("click",handlePauseGame);
+resumeBtn.addEventListener("click",hendleResumeGame);
+restartBtn.addEventListener("click",hendleRestartGame);
+
+let ifPaused = false;
+function handlePauseGame(ifPaused){
+    ifPaused = true ;
+    socket.emit('pause game', ifPaused);
+}
+function hendleResumeGame(ifPaused){
+    ifPaused = false;
+    socket.emit('pause game', ifPaused);
+}
+function hendleRestartGame(){
+    socket.emit('restart game');
+}
+
 function setup() {
     frameRate(5);
     createCanvas(cellNum * side , cellNum * side);
