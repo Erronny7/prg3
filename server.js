@@ -5,28 +5,39 @@ const http = require("http");
 
 const server = http.createServer(app);
 const io = require('socket.io')(server);
-
+module.exports = io;
 
 app.use(express.static("."));
 
 app.get('/', (req, res) => {
     res.redirect('index.html')
 })
+statisticsObj = {
+    grass: 0,
+    grassEater:0,
+    predator:0,
+    flower:0,
+    grassAndFlow:0,
+    water:0,
+}
+
 matrix = []
 grassArr = []
 grassEaterArr = []
 predatorArr = []
 flowerArr = []
 GrassAndFlowerEaterArr = []
+waterArr = []
 
 let Grass = require("./grass.js");
 let GrassEater = require("./GrassEater.js");
 let predator = require("./predator.js");
 let GrassAndFlowerEater = require("./GrassAndFlowerEater.js");
 let Flower = require("./flower.js");
+let Water = require("./water");
 
 let cellNum = 15
-function generate(cellNum, grassNum, grEaterNum, predatorNum, flowerNum, grassAndFlowNum) {
+function generate(cellNum, grassNum, grEaterNum, predatorNum, flowerNum, grassAndFlowNum, waterNum) {
     let matrix = [];
     for (let y = 0; y < cellNum; y++) {
         matrix[y] = [];
@@ -50,12 +61,13 @@ function generate(cellNum, grassNum, grEaterNum, predatorNum, flowerNum, grassAn
     fillRandomCells(3, predatorNum);
     fillRandomCells(4, flowerNum);
     fillRandomCells(5, grassAndFlowNum);
+    fillRandomCells(6, waterNum);
 
     return matrix;
 }
 
 function initGame() {
-    matrix = generate(cellNum, 50, 15, 10, 15, 3)
+    matrix = generate(cellNum, 50, 15, 10, 15, 3, 6)
     initArrays();
     startInterval();
 }
@@ -65,6 +77,7 @@ function initArrays() {
     predatorArr = [];
     flowerArr = [];
     GrassAndFlowerEaterArr = [];
+    waterArr = [];
 
 
     for (var y = 0; y < matrix.length; y++) {
@@ -89,6 +102,9 @@ function initArrays() {
             else if (matrix[y][x] == 5) {
                 let grafle = new GrassAndFlowerEater(x, y)
                 GrassAndFlowerEaterArr.push(grafle)
+            }else if (matrix[y][x] == 6) {
+                let wt = new Water(x, y)
+                waterArr.push(wt)
             }
         }
     }
@@ -121,15 +137,30 @@ function playGame() {
 
     for (let i in GrassAndFlowerEaterArr) {
         GrassAndFlowerEaterArr[i].eat()
+    }for (var i in waterArr) {
+        waterArr[i].mul()
+    }for (var i in waterArr) {
+        waterArr[i].mul()
     }
     io.emit('draw matrix',matrix)
 }
 io.on("connection", function (socket) {
     socket.emit('draw matrix', matrix)
     initGame()
-    socket.on('pause game',handlePauseGame)
-    socket.on('restart game',hendleRestartGame)
+    socket.on('pause game',handlePauseGame);
+    socket.on('restart game',hendleRestartGame);
+    socket.on("change season", handleChangeSeason);
 })
+function  handleChangeSeason(season){
+    if(season == 1){
+        speed = 1000;
+    }else if(season == 2 || season == 4){
+        speed = 700;
+    }else{
+        speed = 300;
+    }
+    startInterval()
+}
 
 function  handlePauseGame(ifPaused){
     if(ifPaused){
@@ -144,7 +175,7 @@ function hendleRestartGame(){
     initGame();
 }
 
-server.listen(7777, () => {
-    console.log('Server is working on port 7777');
+server.listen(3001, () => {
+    console.log('Server is working on port 3001');
 
 })

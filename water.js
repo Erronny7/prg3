@@ -1,7 +1,7 @@
 let Creature = require('./creature')
 const io =  require("./server.js")
 
-module.exports = class Grass extends Creature {
+module.exports = class Water extends Creature {
     constructor(x, y) {
         super(x, y);
         this.multiply = 0
@@ -29,14 +29,14 @@ module.exports = class Grass extends Creature {
         var newCell = this.selectRandomCell(0);
 
         if (newCell && this.multiply >= 8) {
-            statisticsObj.grass++
+            statisticsObj.water++
             io.emit("change statistics", statisticsObj)
             var newX = newCell[0];
             var newY = newCell[1];
             matrix[newY][newX] = 1;
 
-            var newGrass = new Grass(newX, newY, 1);
-            grassArr.push(newGrass);
+            var newwater = new Water(newX, newY, 1);
+            waterArr.push(newwater);
             this.multiply = 0;
         }
     }
